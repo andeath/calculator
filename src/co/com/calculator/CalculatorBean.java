@@ -1,5 +1,8 @@
 package co.com.calculator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CalculatorBean {
 
 	public int add(String numbers) throws Exception {
@@ -18,13 +21,16 @@ public class CalculatorBean {
 
 		numbers = numbers.replace("\n", delimiter);
 		String[] cipher = numbers.split(delimiter);
+		List<Integer> negatives = new ArrayList<Integer>();
 
 		for (int i = 0; i < cipher.length; i++) {
 			try {
 				int numtmp = Integer.parseInt(cipher[i]);
 				if(numtmp <= 1000){
+					if(numtmp<0){
+						negatives.add(numtmp);
+					}
 					sum = sum + numtmp;
-					validateNegative(sum);
 				}
 			} catch (NumberFormatException e) {
 				System.out.println("the value " + cipher[i]
@@ -33,16 +39,12 @@ public class CalculatorBean {
 			}
 
 		}
+		if(negatives.size()>0){
+			throw new Exception("Not support negative:" + negatives);
+		}
 
 		return sum;
 	}
 	
-	
-	private boolean validateNegative(int number) throws Exception{
-		if(number<0)
-			throw new Exception("Not negatives");
-		else
-			return Boolean.TRUE;
-	}
 
 }
