@@ -71,7 +71,23 @@ public class CalculatorBeanTest {
 		assertTrue(calculator.add("//;\n1;1001") == 1);
 		assertFalse(calculator.add("//;\n1;1005") == 1006);
 		assertTrue(calculator.add("2,1,1001,1005") == 3);
-		
+	}
+	
+	
+	@Test
+	public void testAddDelimitersAnyLenght() throws Exception {
+		calculator = new  CalculatorBean();
+		assertTrue(calculator.add("//@@@\n1@@@900@@@2") == 903);
+		assertTrue(calculator.add("//###\n1###900###2") == 903);
+		assertTrue(calculator.add("//%%%\n1%%%900%%%2") == 903);
+	}
+	
+	@Test
+	public void testAddMultipleDelimiters() throws Exception {
+		calculator = new  CalculatorBean();
+		assertTrue(calculator.add("//@#\n1#900@2") == 903);
+		assertTrue(calculator.add("//@@##\n1##900@@2") == 903);
+		assertTrue(calculator.add("//%#&\n1#900&2%3#1") == 907);
 	}
 	
 

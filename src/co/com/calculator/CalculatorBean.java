@@ -14,9 +14,10 @@ public class CalculatorBean {
 		}
 
 		if (numbers.startsWith("//")) {
-			delimiter = numbers.substring(2, 3);
 			int indexNewline = numbers.indexOf("\n");
+			String delimiterParam = numbers.substring(2, indexNewline);
 			numbers = numbers.substring(indexNewline + 1);
+			numbers = numbers.replaceAll("["+delimiterParam+"]", delimiter);
 		}
 
 		numbers = numbers.replace("\n", delimiter);
@@ -25,12 +26,14 @@ public class CalculatorBean {
 
 		for (int i = 0; i < cipher.length; i++) {
 			try {
-				int numtmp = Integer.parseInt(cipher[i]);
-				if(numtmp <= 1000){
-					if(numtmp<0){
-						negatives.add(numtmp);
+				if(!cipher[i].trim().equals("")){
+					int numtmp = Integer.parseInt(cipher[i]);
+					if(numtmp <= 1000){
+						if(numtmp<0){
+							negatives.add(numtmp);
+						}
+						sum = sum + numtmp;
 					}
-					sum = sum + numtmp;
 				}
 			} catch (NumberFormatException e) {
 				System.out.println("the value " + cipher[i]
